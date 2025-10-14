@@ -9,11 +9,16 @@ import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import cookiesParser from "cookie-parser";
 import YAML from "yamljs";
+import session from "express-session";
 
-import { globalErrorHandler, globalResponseHandler } from "@middlewares";
+import {
+  globalErrorHandler,
+  globalResponseHandler,
+  verifyToken,
+} from "@middlewares";
 import { initTelemetry } from "./telemetry/opentelemetry";
-import { userRoutes } from "@routes";
-import { config } from "@config";
+import { authRoutes, userRoutes } from "@routes";
+import { config, passport } from "@config";
 import logger from "@logger";
 import { customError } from "@utils";
 initTelemetry();
@@ -29,6 +34,17 @@ app.use(compression());
 app.use(express.json());
 app.use(cookiesParser());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "secret",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 if (config.nodeEnv !== "production") {
   app.use(morgan("dev"));
@@ -53,8 +69,11 @@ app.get("/health", (req, res, next) => {
   }
 });
 
+// Auth route
+app.use("/auth", authRoutes);
+
 // user route
-app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/users", verifyToken, userRoutes);
 
 // common route not found handler
 app.use((req, res, next) => {
@@ -71,7 +90,7 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(globalErrorHandler);
 
 try {
-  app.listen(config.port, () => {
+  app.listen(Number(config.port), "0.0.0.0", () => {
     logger.info(`Server running on port ${config.port}`);
   });
 } catch (err) {

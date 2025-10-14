@@ -1,6 +1,6 @@
 model UserDetails {
     id           Int      @id @default(autoincrement())
-    userId       Int      @unique
+    userId       Int     @unique
     firstName    String?
     lastName     String?
     dateOfBirth  DateTime?

@@ -29,7 +29,9 @@
       "@validation": ["validation/index"],
       "@validation/*": ["validation/*"],
       "@types": ["types/index"],
-      "@types/*": ["types/*"]
+      "@types/*": ["types/*"],
+      "@Services": ["services/index"],
+      "@Services/*": ["services/*"]
     }
   },
   "include": ["src"],
