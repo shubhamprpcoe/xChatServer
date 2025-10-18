@@ -1,15 +1,17 @@
+import {config} from "./config/envConfig";
 import express, { Application } from "express";
-import cors from "cors";
-import morgan from "morgan";
-import helmet from "helmet";
-import compression from "compression";
 import swaggerUi from "swagger-ui-express";
 import rateLimit from "express-rate-limit";
-import Ajv from "ajv";
-import addFormats from "ajv-formats";
+import compression from "compression";
+
 import cookiesParser from "cookie-parser";
-import YAML from "yamljs";
 import session from "express-session";
+import addFormats from "ajv-formats";
+import morgan from "morgan";
+import helmet from "helmet";
+import YAML from "yamljs";
+import cors from "cors";
+import Ajv from "ajv";
 
 import {
   globalErrorHandler,
@@ -18,9 +20,10 @@ import {
 } from "@middlewares";
 import { initTelemetry } from "./telemetry/opentelemetry";
 import { authRoutes, userRoutes } from "@routes";
-import { config, passport } from "@config";
-import logger from "@logger";
 import { customError } from "@utils";
+import { passport } from "@config";
+import logger from "@logger";
+
 initTelemetry();
 
 const app: Application = express();
@@ -37,7 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "secret",
+    secret: process.env.SESSION_SECRET ?? "secret",
     resave: false,
     saveUninitialized: false,
   })
@@ -94,6 +97,6 @@ try {
     logger.info(`Server running on port ${config.port}`);
   });
 } catch (err) {
-  logger.error("Fatal error: Serever stop", err);
+  logger.error("Fatal error: Server stop", err);
   process.exit(1);
 }

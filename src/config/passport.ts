@@ -1,10 +1,9 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy, Profile } from "passport-google-oauth20";
 
-const GOOGLE_CLIENT_ID =
-  " " || process.env.GOOGLE_CLIENT_ID;
-const GOOGLE_CLIENT_SECRET = " " || process.env.GOOGLE_CLIENT_SECRET;
-const CALLBACK_URL = "http://localhost:3000/auth/google/callback";
+const GOOGLE_CLIENT_ID =process.env.GOOGLE_CLIENT_ID
+const GOOGLE_CLIENT_SECRET =process.env.GOOGLE_CLIENT_SECRET
+const CALLBACK_URL = "http://localhost:3000/auth/google/callback"
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -17,9 +16,9 @@ passport.deserializeUser((obj: any, done) => {
 passport.use(
   new GoogleStrategy(
     {
-      clientID: GOOGLE_CLIENT_ID ,
-      clientSecret: GOOGLE_CLIENT_SECRET || process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: CALLBACK_URL || "",
+      clientID: String( GOOGLE_CLIENT_ID) ,
+      clientSecret: String(GOOGLE_CLIENT_SECRET),
+      callbackURL: CALLBACK_URL,
     },
     async (_accessToken, _refreshToken, profile: Profile, done) => {
       try {

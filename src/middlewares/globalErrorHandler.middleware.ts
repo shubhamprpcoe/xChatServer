@@ -9,25 +9,25 @@ export const globalErrorHandler = (
   next: NextFunction
 ) => {
   logger.error(err.stack);
-  err.statusCode = err.statusCode || 500;
+  err.statusCode = err.statusCode ?? 500;
 
   if (config.nodeEnv === "development") {
-    res.status(err?.statusCode || 500).json({
+    res.status(err?.statusCode ?? 500).json({
       success: false,
       status: err?.statusCode,
-      message: err.message || "Internal Server Error",
+      message: err.message ?? "Internal Server Error",
       error: err,
       stackTrace: err?.stack,
     });
   } else if (config.nodeEnv === "production") {
     if (err.isOperational === true) {
-      res.status(err?.statusCode || 500).json({
+      res.status(err?.statusCode ?? 500).json({
         success: false,
         status: err?.statusCode,
-        message: err.message || "Internal Server Error",
+        message: err.message ?? "Internal Server Error",
       });
     } else {
-      res.status(err?.statusCode || 500).json({
+      res.status(err?.statusCode ?? 500).json({
         success: false,
         status: err?.statusCode,
         message: "Internal Server Error",

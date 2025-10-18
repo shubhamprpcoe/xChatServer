@@ -38,7 +38,7 @@ const logger = createLogger({
         format.colorize(),
         format.timestamp(),
         format.printf(({ timestamp, level, message, stack }) => {
-          return `[${timestamp}] ${level}: ${stack || message}`;
+          return `[${timestamp}] ${level}: ${stack ?? message}`;
         })
       ),
     }),

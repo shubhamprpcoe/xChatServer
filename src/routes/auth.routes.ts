@@ -28,7 +28,7 @@ authRoutes.get(
   async (req, res) => {
     try {
       const user = req.user as any;
-      const { firstName, lastName } = splitFullName(user?.displayName || "");
+      const { firstName, lastName } = splitFullName(user?.displayName ?? "");
 
       // Step 1: Generate JWT (your own app token)
       const token = generateAccessToken({
@@ -64,7 +64,7 @@ authRoutes.get("/success", (req: Request, res: Response) => {
     res,
     req,
     null,
-    "✅ Logged in as " + (req.user as any)?.displayName
+    `✅ Logged in as ${  (req.user as any)?.displayName}`
   );
 });
 

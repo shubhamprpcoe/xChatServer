@@ -45,17 +45,15 @@ module.exports = [
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
-          caughtErrorsIgnorePattern: "^_",
-          destructuredArrayIgnorePattern: "^_",
+        argsIgnorePattern: "^_", // Ignore unused args starting with _
+        varsIgnorePattern: "^_", // Ignore unused variables starting with _
         },
       ],
 
       // Type safety - Make nullish coalescing a warning instead of error
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-non-null-assertion": "warn",
-      "@typescript-eslint/prefer-nullish-coalescing": "warn", // Changed from error to warn
+      "@typescript-eslint/prefer-nullish-coalescing": "error", // Changed from error to warn
       "@typescript-eslint/prefer-optional-chain": "warn", // Changed from error to warn
 
       // Code style and best practices

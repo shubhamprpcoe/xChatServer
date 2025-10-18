@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "devStart": "NODE_ENV=development nodemon --ignore logs/* --ignore src/swagger/*.yaml --exec ts-node -r tsconfig-paths/register src/server.ts",
+    "devStartWin": "cross-env NODE_ENV=development nodemon --ignore logs/* --ignore src/swagger/*.yaml --exec ts-node -r tsconfig-paths/register src/server.ts",
     "build": "tsc && npx tsc-alias",
     "start": "NODE_ENV=production node dist/server.js",
     "test": "NODE_ENV=test jest",
@@ -39,6 +40,7 @@
     "@types/yamljs": "^0.2.34",
     "@typescript-eslint/eslint-plugin": "^8.44.1",
     "@typescript-eslint/parser": "^8.44.1",
+    "cross-env": "^10.1.0",
     "eslint": "^9.36.0",
     "eslint-plugin-security": "^3.0.1",
     "globals": "^16.4.0",

@@ -4,10 +4,12 @@ import { globalResponseHandler } from "./globalResponseHandler.middleware";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
-  throw new Error("JWT_SECRET not set");
+  console.log("FATAL ERROR: JWT_SECRET is not defined.");
 }
 
-export const verifyToken = (
+import { RequestHandler } from "express";
+
+export const verifyToken: RequestHandler = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -16,7 +18,17 @@ export const verifyToken = (
     const token = req.cookies.auth_token;
     if (!token) return res.redirect("/auth/google");
 
-    const decoded = jwt.verify(token, JWT_SECRET);
+    if (!JWT_SECRET) {
+      return globalResponseHandler.sendSuccess(
+        res,
+        req,
+        null,
+        "JWT secret is not defined on the server.",
+        500
+      );
+    }
+
+    const decoded = jwt.verify(token, JWT_SECRET as string);
     req.user = decoded;
     next();
   } catch (err) {

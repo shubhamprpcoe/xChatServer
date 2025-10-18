@@ -12,16 +12,86 @@ XChat is a simple chat application server.
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/xchat.git
-cd xchat/server
+git clone https://github.com/yourusername/xChatServer.git
+cd xChatServer
 npm install
 ```
+### Environment Variables
+
+Create a `.env` file in the `server` directory:
+
+### generate the Prisma
+
+```bash 
+// for Unix and Mac
+npx prisma migrate dev --name your_migration_name
+```
+
+
+### Add Tables and Migration 
+
+```bash 
+// for Unix and Mac
+npx prisma generate
+```
+
 
 ### Running the Server
 
-```bash
-npm start
+```bash 
+// for Unix and Mac
+npm devStart
 ```
+
+```bash 
+// for Windows
+npm devStartWin
+```
+
+### Running the Docker
+
+```bash 
+// Turn on Docker Desktop to build
+docker build -t xchatserver .
+```
+
+```bash 
+
+// for Unix and Mac
+docker run -it --rm \
+  -e DATABASE_URL="{ ADD_VAL }" \
+  -e NODE_ENV="development" \
+  -e PORT="3000" \
+  -e GOOGLE_CLIENT_ID=""{ ADD_VAL }" " \
+  -e GOOGLE_CLIENT_SECRET=""{ ADD_VAL }" " \
+  -e JWT_SECRET=""{ ADD_VAL }" " \
+  -e ACCESS_EXPIRY="1h" \
+  -e REFRESH_EXPIRY="7d" \
+  -p 3000:3000 \
+  xchatserver
+``
+
+```bash 
+
+
+
+```bash 
+// for Windows
+docker run -it --rm `
+  -e DATABASE_URL="" `
+  -e NODE_ENV="development" `
+  -e PORT="3000" `
+  -e GOOGLE_CLIENT_ID="" `
+  -e GOOGLE_CLIENT_SECRET="" `
+  -e JWT_SECRET="" `
+  -e ACCESS_EXPIRY="1h" `
+  -e REFRESH_EXPIRY="7d" `
+  -p 3000:3000 `
+  xchatserver
+
+``
+
+
 
 The server will start on the default port (e.g., `3000`). You can configure the port in `.env`.
 
@@ -53,19 +123,9 @@ Check your project's documentation or `package.json` scripts for the exact comma
 - User authentication
 - RESTful API endpoints
 
-### Folder Structure
 
-```
-server/
-├── src/
-├── package.json
-├── README.md
-└── .env
-```
 
-### Environment Variables
 
-Create a `.env` file in the `server` directory:
 
 ```
 PORT=3000

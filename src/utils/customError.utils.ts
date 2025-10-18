@@ -1,6 +1,5 @@
 import { Errback, NextFunction, Request } from "express";
-import { ParamsDictionary } from "express-serve-static-core";
-import { ParsedQs } from "qs";
+
 
 export class customError extends Error {
   statusCode: number;

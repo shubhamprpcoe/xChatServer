@@ -1,12 +1,10 @@
 import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
 
-const JWT_SECRET =
-  process.env.JWT_SECRET ||
-  "fa7d2b1b89c4f64c6a3b12dbbc97f4c229e34a2e89f9d5f0f8_";
+const JWT_SECRET = process.env.JWT_SECRET ?? "your_jwt_secret";
 
-const ACCESS_EXPIRY = (process.env.ACCESS_EXPIRY ||
+const ACCESS_EXPIRY = (process.env.ACCESS_EXPIRY ??
   "1h") as jwt.SignOptions["expiresIn"];
-const REFRESH_EXPIRY = (process.env.REFRESH_EXPIRY ||
+const REFRESH_EXPIRY = (process.env.REFRESH_EXPIRY ??
   "7d") as jwt.SignOptions["expiresIn"];
 
 /** Define payload structure */
